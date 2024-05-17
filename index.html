@@ -86,20 +86,66 @@
 
                 <div class="col-lg-5 ml-auto" data-aos="fade-up" data-aos-delay="500">
                   <form action="" method="post" class="form-box">
-                    <h3 class="h4 text-black mb-4">Sign Up</h3>
+                    <h3 class="h4 text-black mb-4">Enter Details To Get Recommendations</h3>
                     <div class="form-group">
-                      <input type="text" class="form-control" placeholder="Email Addresss">
+                      <input type="text" id="current_job" class="form-control" placeholder="Enter Current Job">
                     </div>
                     <div class="form-group">
-                      <input type="password" class="form-control" placeholder="Password">
+                      <input type="password" id="career_interest" class="form-control" placeholder="Enter Career Interest">
                     </div>
                     <div class="form-group mb-4">
-                      <input type="password" class="form-control" placeholder="Re-type Password">
+                      <input type="password" id="qualification" class="form-control" placeholder="Enter Qualification">
                     </div>
                     <div class="form-group">
-                      <input type="submit" class="btn btn-primary btn-pill" value="Sign up">
+                      <input type="submit" class="btn btn-primary btn-pill" value="Recommend">
                     </div>
                   </form>
+
+                  <h2>Recommendations:</h2>
+                  <div id="recommendations"></div>
+
+                  <script>
+                      document.getElementById('recommendation-form').addEventListener('submit', async (event) => {
+                          event.preventDefault();
+
+                          const currentJob = document.getElementById('current_job').value;
+                          const careerInterest = document.getElementById('career_interest').value;
+                          const qualification = document.getElementById('qualification').value;
+
+                          const response = await fetch('/recommend', {
+                              method: 'POST',
+                              headers: {
+                                  'Content-Type': 'application/json',
+                              },
+                              body: JSON.stringify({
+                                  current_job: currentJob,
+                                  career_interest: careerInterest,
+                                  qualification: qualification,
+                              }),
+                          });
+
+                          const recommendations = await response.json();
+
+                          const recommendationsDiv = document.getElementById('recommendations');
+                          recommendationsDiv.innerHTML = '';
+
+                          recommendations.forEach((rec) => {
+                              const recElement = document.createElement('div');
+                              recElement.innerHTML = `
+                                  <h3>${rec.Program_Name}</h3>
+                                  <p><strong>Faculty:</strong> ${rec.Faculty}</p>
+                                  <p><strong>Job Prospects:</strong> ${rec.Job_Prospects}</p>
+                                  <p><strong>Program Description:</strong> ${rec.Program_Description}</p>
+                                  <p><strong>Program Requirements:</strong> ${rec.Program_Requirements}</p>
+                                  <p><strong>Tuition:</strong> ${rec.Tuition}</p>
+                                  <p><strong>Tuition Coverage:</strong> ${rec.Tuition_Coverage}</p>
+                                  <p><strong>Deadline Applications for Autumn 2025:</strong> ${rec.Deadline_Applications_for_Autumn_2025}</p>
+                                  <p><strong>Deadline Applications for Spring 2025:</strong> ${rec.Deadline_Applications_for_Spring_2025}</p>
+                              `;
+                              recommendationsDiv.appendChild(recElement);
+                          });
+                      });
+                  </script>
 
                 </div>
               </div>
