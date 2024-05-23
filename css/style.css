@@ -993,7 +993,7 @@ h1, h2, h3, h4, h5,
   font-size: 1rem; }
 
 .courses-title {
-  padding-bottom: 13rem;
+  padding-bottom: 0rem;
   background: #7971ea; }
   .courses-title .section-title {
     color: #fff; }
