@@ -260,11 +260,10 @@
                         recommendations.forEach((rec) => {
                             const recElement = document.createElement('div');
                             recElement.innerHTML = `
-                                <h3> align="left" ${rec.Program_Name}</h3>
+                                <h3 align="left"> ${rec.Program_Name}</h3>
                                 <p align="left"><strong>Faculty:</strong> ${rec.Faculty}</p>
                                 <p align="left"><strong>Job Prospects:</strong> ${rec.Job_Prospects}</p>
                                 <p align="left"><strong>Program Description:</strong> ${rec.Program_Description}</p>
-                                <p align="left"><strong>Program Requirements:</strong> ${rec.Program_Requirements}</p>
                                 <p align="left"><strong>Tuition:</strong> ${rec.Tuition}</p>
                                 <p align="left"><strong>Tuition Coverage:</strong> ${rec.Tuition_Coverage}</p>
                                 <p align="left"><strong>Deadline Applications for Autumn 2025:</strong> ${rec.Deadline_Applications_for_Autumn_2025}</p>
