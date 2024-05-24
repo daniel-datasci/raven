@@ -1,21 +1,10 @@
 #==============================================================================================================================================
 #Loading the core packages
 #==============================================================================================================================================
-import streamlit as st
-import streamlit.components.v1 as stc
-
+import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 import urllib.parse
-
-import pandas as pd
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
-import streamlit as st
-
-import pandas as pd
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
-import streamlit as st
-
 import pickle
 
 
@@ -30,8 +19,6 @@ def load_data(data):
 
 candidate_df = load_data("data/candidate2.csv")
 master_program_df = load_data("data/Master_Program.csv")
-candidate_df = load_data("data/candidate.csv")
-requirements_df = load_data("data/requirements.csv")
 
 
 #==============================================================================================================================================
