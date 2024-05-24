@@ -194,19 +194,22 @@
               </div>
 
               <div class="col-lg-5 ml-auto" data-aos="fade-up" data-aos-delay="500">
-                <form action="" method="post" class="form-box">
+                <form id="recommendation-form" action="" method="post" class="form-box">
                   <h3 class="h4 text-black mb-4">Enter Details To Get Recommendations</h3>
                   <div class="form-group">
-                    <input type="text" id="current_job" class="form-control" placeholder="Enter Current Job">
+                    <label for="current_job">Current Job:</label>
+                    <input type="text" id="current_job" name="current_job" class="form-control">
                   </div>
                   <div class="form-group">
-                    <input type="password" id="career_interest" class="form-control" placeholder="Enter Career Interest">
+                    <label for="career_interest">Career Interest:</label>
+                    <input type="text" id="career_interest" name="career_interest" class="form-control">
                   </div>
                   <div class="form-group mb-4">
-                    <input type="password" id="qualification" class="form-control" placeholder="Enter Qualification">
+                    <label for="qualification">Qualification:</label>
+                    <input type="text" id="qualification" name="qualification" class="form-control">
                   </div>
                   <div class="form-group">
-                    <input type="submit" class="btn btn-primary btn-pill" value="Recommend">
+                    <input type="submit" class="btn btn-primary btn-pill" value="Get Recommendations">
                   </div>
                 </form>
               </div>
@@ -234,7 +237,7 @@
                         const careerInterest = document.getElementById('career_interest').value;
                         const qualification = document.getElementById('qualification').value;
 
-                        const response = await fetch('/recommend', {
+                        const response = await fetch('https://school-recommender.onrender.com/recommend', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
