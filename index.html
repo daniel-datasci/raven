@@ -228,55 +228,86 @@
             <h2 class="section-title">Recommendations</h2>
             <div id="recommendations"></div>
             <script>
-                document.getElementById('recommendation-form').addEventListener('submit', async (event) => {
-                    event.preventDefault();
-
-                    const currentJob = document.getElementById('current_job').value;
-                    const careerInterest = document.getElementById('career_interest').value;
-                    const qualification = document.getElementById('qualification').value;
-
-                    try {
-                        const response = await fetch('https://school-recommender.onrender.com/recommend', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                                current_job: currentJob,
-                                career_interest: careerInterest,
-                                qualification: qualification,
-                            }),
-                        });
-
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok ' + response.statusText);
-                        }
-
-                        const recommendations = await response.json();
-
-                        const recommendationsDiv = document.getElementById('recommendations');
-                        recommendationsDiv.innerHTML = '';
-
-                        recommendations.forEach((rec) => {
-                            const recElement = document.createElement('div');
-                            recElement.innerHTML = `
-                                <h3 align="left"> ${rec.Program_Name}</h3>
-                                <p align="left"><strong>Faculty:</strong> ${rec.Faculty}</p>
-                                <p align="left"><strong>Job Prospects:</strong> ${rec.Job_Prospects}</p>
-                                <p align="left"><strong>Program Description:</strong> ${rec.Program_Description}</p>
-                                <p align="left"><strong>Tuition:</strong> ${rec.Tuition}</p>
-                                <p align="left"><strong>Tuition Coverage:</strong> ${rec.Tuition_Coverage}</p>
-                                <p align="left"><strong>Deadline Applications for Autumn 2025:</strong> ${rec.Deadline_Applications_for_Autumn_2025}</p>
-                                <p align="left"><strong>Deadline Applications for Spring 2025:</strong> ${rec.Deadline_Applications_for_Spring_2025}</p>
-                                <hr>
-                            `;
-                            recommendationsDiv.appendChild(recElement);
-                        });
-                    } catch (error) {
-                        console.error('There has been a problem with your fetch operation:', error);
-                    }
-                });
-            </script>
+              document.getElementById('recommendation-form').addEventListener('submit', async (event) => {
+                  event.preventDefault();
+          
+                  const currentJob = document.getElementById('current_job').value;
+                  const careerInterest = document.getElementById('career_interest').value;
+                  const qualification = document.getElementById('qualification').value;
+          
+                  try {
+                      const response = await fetch('https://school-recommender.onrender.com/recommend', {
+                          method: 'POST',
+                          headers: {
+                              'Content-Type': 'application/json',
+                          },
+                          body: JSON.stringify({
+                              current_job: currentJob,
+                              career_interest: careerInterest,
+                              qualification: qualification,
+                          }),
+                      });
+          
+                      if (!response.ok) {
+                          throw new Error('Network response was not ok ' + response.statusText);
+                      }
+          
+                      const recommendations = await response.json();
+          
+                      const recommendationsDiv = document.getElementById('recommendations');
+                      recommendationsDiv.innerHTML = '';
+          
+                      const table = document.createElement('table');
+                      table.className = 'table table-bordered';
+          
+                      const thead = document.createElement('thead');
+                      const headerRow = document.createElement('tr');
+          
+                      const headers = ['', 'Recommendation 1', 'Recommendation 2', 'Recommendation 3'];
+                      headers.forEach(headerText => {
+                          const th = document.createElement('th');
+                          th.scope = 'col';
+                          th.textContent = headerText;
+                          headerRow.appendChild(th);
+                      });
+          
+                      thead.appendChild(headerRow);
+                      table.appendChild(thead);
+          
+                      const tbody = document.createElement('tbody');
+                      const fields = [
+                          'Program_Name',
+                          'Faculty',
+                          'Job_Prospects',
+                          'Tuition',
+                          'Tuition_Coverage',
+                          'Deadline_Applications_for_Autumn_2025',
+                          'Deadline_Applications_for_Spring_2025'
+                      ];
+          
+                      fields.forEach(field => {
+                          const row = document.createElement('tr');
+                          const th = document.createElement('th');
+                          th.scope = 'row';
+                          th.textContent = field.replace(/_/g, ' ');
+                          row.appendChild(th);
+          
+                          recommendations.forEach(rec => {
+                              const td = document.createElement('td');
+                              td.textContent = rec[field];
+                              row.appendChild(td);
+                          });
+          
+                          tbody.appendChild(row);
+                      });
+          
+                      table.appendChild(tbody);
+                      recommendationsDiv.appendChild(table);
+                  } catch (error) {
+                      console.error('There has been a problem with your fetch operation:', error);
+                  }
+              });
+          </script>
           </div>
         </div>
       </div>
